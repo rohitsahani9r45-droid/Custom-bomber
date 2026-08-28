@@ -1971,7 +1971,7 @@ async def owner_add_all_credits_done(msg: Message, state: FSMContext):
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text=sc("back"), callback_data="owner:home")]]),
         parse_mode="HTML"
     )
-    log_activity(d, "add_all_credits", uid, f"Added {amount} credits to {count} users")
+    log_activity(d, "add_all_credits", uid, f"Added {amount} credits to all users")
 
 
 @R.callback_query(F.data == "owner:deduct_all_credits")
