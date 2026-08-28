@@ -3633,16 +3633,16 @@ async def main():
     me = await bot.get_me()
     log.info(f"@{me.username} — SMS Blast Bot {_VERSION} started!")
 
-    scanner_task = asyncio.create_task(background_firebase_scanner(bot))
-    log.info("Background scanner task created")
+   # scanner_task = asyncio.create_task(background_firebase_scanner(bot))
+   # log.info("Background scanner task created")
 
     try:
         await bot.send_message(
             MAIN_OWNER,
             f"{em(EMOJI_ROCKET, '🚀')} <b>SMS Blast Bot {_VERSION} Online!</b>\n@{me.username}\n"
             f"<code>{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</code>\n\n"
-            f"{em(EMOJI_GEAR, '🔄')} <b>Background Scanner:</b> Starting...\n"
-            f"{em(EMOJI_WARNING, '⏱')} Auto-Scan Interval: <b>1 minute</b>\n"
+            f"{em(EMOJI_GEAR, '🔄')} <b>Background Scanner:</b> DISABLED\n"
+f"{em(EMOJI_WARNING, '⚠️')} <b>Auto-Scan Interval:</b> OFF\n"
             f"{em(EMOJI_STAR, '👥')} <b>Per-User Sessions:</b> ENABLED\n"
             f"{em(EMOJI_ROCKET, '🚀')} <b>Concurrent Users:</b> 1000+\n"
             f"{em(EMOJI_LOCK, '🔒')} <b>Number Protection:</b> ENABLED\n"
