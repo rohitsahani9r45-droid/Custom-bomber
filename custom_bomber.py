@@ -1431,19 +1431,18 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
                 del USER_SESSIONS[uid]
         return
 
-    sent_ok = 0
+        sent_ok = 0
     sent_fail = 0
     msgs_left = count
     api_usage_delta = {}
     last_update_time = time.time()
-            start_time = time.time()
+    start_time = time.time()
+
     async def do_send():
         nonlocal sent_ok, sent_fail, msgs_left, last_update_time
         try:
-            
             while msgs_left > 0:
                 async with session.lock:
-
                     if session.cancelled:
                         log.info(f"User {uid} stopped sending at {sent_ok + sent_fail}/{count}")
                         break
@@ -1453,11 +1452,11 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
                 for device in devices:
                     if msgs_left <= 0:
                         break
-                        
+
                     async with session.lock:
                         if session.cancelled:
                             break
-                            
+
                     fb_id = device["fb_id"]
                     fb_url = device["fb_url"]
                     dev_id = device["dev_id"]
