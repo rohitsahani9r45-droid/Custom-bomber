@@ -114,8 +114,8 @@ SUPER_ADMIN_NAME = "@Rohit_mxd"
 SUPER_ADMIN_LINK = "https://t.me/Rohit_mxd"
 SUPER_ADMINS = [2109945627]
 
-BOT_TOKEN = os.getenv("BOT_TOKEN", "86886:AAr5DnGBW9DyY2LuKHqCjueXSl8").strip()
-LOG_CHANNEL_ID = --1003357838238
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8999186466:AAEVlwohq698oi7u8CfqMbsB7xaYV0vaoig").strip()
+LOG_CHANNEL_ID = -1003357838238
 
 _DATA_FILE = "blast_data.json"
 _VERSION = "v3.2-PREMIUM"
