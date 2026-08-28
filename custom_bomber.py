@@ -1436,10 +1436,11 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
     msgs_left = count
     api_usage_delta = {}
     last_update_time = time.time()
-    start_time = time.time()
-                async def do_send():
-        nonlocal sent_ok,sent_fail,msgs_left,last_update_time
+            start_time = time.time()
+    async def do_send():
+        nonlocal sent_ok, sent_fail, msgs_left, last_update_time
         try:
+            
             while msgs_left > 0:
                 async with session.lock:
 
