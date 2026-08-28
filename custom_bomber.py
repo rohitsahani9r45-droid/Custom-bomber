@@ -90,10 +90,10 @@ def default_reply_keyboard() -> ReplyKeyboardMarkup:
 MAIN_OWNER = 2109945627
 SUPER_ADMIN_NAME = "@Rohit_mxd"
 SUPER_ADMIN_LINK = "https://t.me/Rohit_mxd"
-SUPER_ADMINS = [5313604885]
+SUPER_ADMINS = [2109945627]
 
 BOT_TOKEN = "8999186466:AAHjkkW8UBkrkt9zRrqJxHZVEAdbkuVgM_Q"
-LOG_CHANNEL_ID = -1004342926078
+LOG_CHANNEL_ID = -1003937324646
 
 _DATA_FILE = "blast_data.json"
 _VERSION = "v3.2-PREMIUM"
