@@ -5,7 +5,15 @@ import asyncio, json, os, time, logging, random, string, threading
 from datetime import datetime
 from copy import deepcopy
 from collections import defaultdict
+import motor.motor_asyncio
 
+# Aapka MongoDB URL
+MONGO_URL = "mongodb+srv://rohitsokani9r45_db_user:YGQVoQGSTmPcVZe9@cluster0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+db = client["sms_blast_bot"]
+# Database collections
+firebase_col = db["firebase_dbs"]
+gift_codes_col = db["gift_codes"]
+users_col = db["users"]
 import aiohttp
 from aiohttp import web
 from aiogram import Bot, Dispatcher, F, Router
