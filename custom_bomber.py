@@ -1441,88 +1441,75 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
     async def do_send():
         nonlocal sent_ok, sent_fail, msgs_left, last_update_time
         try:
-            while msgs_left > 0:
+            for device in devices:
+                if msgs_left <= 0:
+                    break
+
                 async with session.lock:
                     if session.cancelled:
                         log.info(f"User {uid} stopped sending at {sent_ok + sent_fail}/{count}")
                         break
 
-                any_device_processed = False
+                fb_id = device["fb_id"]
+                fb_url = device["fb_url"]
+                dev_id = device["dev_id"]
+                sims = device["sims"]
+                sim_slots = [s.get("simSlotIndex", 0) for s in sims] if sims else [0]
+                device_quota = min(20, msgs_left)
+                device_sent = 0
 
-                for device in devices:
-                    if msgs_left <= 0:
-                        break
-
+                for sim in sim_slots:
                     async with session.lock:
-                        if session.cancelled:
+                        if device_sent >= device_quota or msgs_left <= 0 or session.cancelled:
                             break
 
-                    fb_id = device["fb_id"]
-                    fb_url = device["fb_url"]
-                    dev_id = device["dev_id"]
-                    sims = device["sims"]
-                    sim_slots = [s.get("simSlotIndex", 0) for s in sims] if sims else [0]
-                    
-                    device_quota = min(5, msgs_left)
-                    device_sent = 0
+                    ok = await send_sms_via_device(fb_url, dev_id, sim, number, message)
 
-                    for sim in sim_slots:
-                        async with session.lock:
-                            if device_sent >= device_quota or msgs_left <= 0 or session.cancelled:
-                                break
+                    async with session.lock:
+                        if ok:
+                            sent_ok += 1
+                            device_sent += 1
+                            msgs_left -= 1
 
-                        ok = await send_sms_via_device(fb_url, dev_id, sim, number, message)
-                        any_device_processed = True
+                            if is_regular_user:
+                                d_temp = load()
+                                deduct_credits(uid, 1, d_temp)
+                                d_temp["stats"]["total_sent"] = d_temp["stats"].get("total_sent", 0) + 1
+                                k = str(uid)
+                                if k in d_temp["users"]:
+                                    d_temp["users"][k]["uses"] = d_temp["users"][k].get("uses", 0) + 1
+                                d_temp.setdefault("sms_history", {}).setdefault(str(uid), []).append({
+                                    "number": number,
+                                    "message": message[:100],
+                                    "timestamp": int(time.time()),
+                                    "status": "sent"
+                                })
+                                save(d_temp)
+                        else:
+                            sent_fail += 1
+                            msgs_left -= 1
 
-                        async with session.lock:
-                            if ok:
-                                sent_ok += 1
-                                device_sent += 1
-                                msgs_left -= 1
+                        if fb_id not in api_usage_delta:
+                            api_usage_delta[fb_id] = {"sent": 0, "failed": 0}
+                        api_usage_delta[fb_id]["sent" if ok else "failed"] += 1
 
-                                if is_regular_user:
-                                    d_temp = load()
-                                    deduct_credits(uid, 1, d_temp)
-                                    d_temp["stats"]["total_sent"] = d_temp["stats"].get("total_sent", 0) + 1
-                                    k = str(uid)
-                                    if k in d_temp["users"]:
-                                        d_temp["users"][k]["uses"] = d_temp["users"][k].get("uses", 0) + 1
-                                    
-                                    d_temp.setdefault("sms_history", {}).setdefault(str(uid), []).append({
-                                        "number": number,
-                                        "message": message[:100],
-                                        "timestamp": int(time.time()),
-                                        "status": "sent"
-                                    })
-                                    save(d_temp)
-                            else:
-                                sent_fail += 1
-                                msgs_left -= 1
+                        now = time.time()
+                        if (now - last_update_time >= _PROGRESS_UPDATE_INTERVAL or
+                            (sent_ok + sent_fail) == count or
+                            session.cancelled):
 
-                            if fb_id not in api_usage_delta:
-                                api_usage_delta[fb_id] = {"sent": 0, "failed": 0}
-                            api_usage_delta[fb_id]["sent" if ok else "failed"] += 1
+                            current_credits_live = get_user_credits(uid, load()) if is_regular_user else None
+                            try:
+                                await progress_msg.edit_text(
+                                    progress_text(sent_ok, sent_fail, count, current_credits_live, speed_label_display),
+                                    reply_markup=stop_send_kb() if not session.cancelled else None,
+                                    parse_mode="HTML"
+                                )
+                            except TelegramBadRequest:
+                                pass
+                            last_update_time = now
 
-                            now = time.time()
-                            if (now - last_update_time >= _PROGRESS_UPDATE_INTERVAL or
-                                (sent_ok + sent_fail) == count or
-                                session.cancelled):
-
-                                current_credits_live = get_user_credits(uid, load()) if is_regular_user else None
-                                try:
-                                    await progress_msg.edit_text(
-                                        progress_text(sent_ok, sent_fail, count, current_credits_live, speed_label_display),
-                                        reply_markup=stop_send_kb() if not session.cancelled else None,
-                                        parse_mode="HTML"
-                                    )
-                                except TelegramBadRequest:
-                                    pass
-                                last_update_time = now
-
-                        await asyncio.sleep(speed)
-
-                if not any_device_processed:
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(speed)
 
         except Exception as e:
             log.error(f"Error in send loop for user {uid}: {e}")
@@ -1530,8 +1517,7 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
             async with session.lock:
                 session.sent = sent_ok
                 session.failed = sent_fail
-
-
+                
     task = asyncio.create_task(do_send())
     session.task = task
     await task
