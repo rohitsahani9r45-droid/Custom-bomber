@@ -1437,12 +1437,12 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
     api_usage_delta = {}
     last_update_time = time.time()
     start_time = time.time()
-
-        async def do_send():
+                async def do_send():
         nonlocal sent_ok, sent_fail, msgs_left, last_update_time
         try:
             while msgs_left > 0:
                 async with session.lock:
+
                     if session.cancelled:
                         log.info(f"User {uid} stopped sending at {sent_ok + sent_fail}/{count}")
                         break
@@ -1452,18 +1452,17 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
                 for device in devices:
                     if msgs_left <= 0:
                         break
-
+                        
                     async with session.lock:
                         if session.cancelled:
                             break
-
+                            
                     fb_id = device["fb_id"]
                     fb_url = device["fb_url"]
                     dev_id = device["dev_id"]
                     sims = device["sims"]
                     sim_slots = [s.get("simSlotIndex", 0) for s in sims] if sims else [0]
                     
-                    # 🔹 Per-device quantity limit (5 set kiya hai)
                     device_quota = min(5, msgs_left)
                     device_sent = 0
 
@@ -1531,6 +1530,7 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
             async with session.lock:
                 session.sent = sent_ok
                 session.failed = sent_fail
+
 
     task = asyncio.create_task(do_send())
     session.task = task
