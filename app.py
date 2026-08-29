@@ -22,7 +22,7 @@ from aiogram.exceptions import TelegramBadRequest
 
 # ========== MONGODB ASYNC LOCK ==========
 _DB_LOCK = threading.RLock()  # kept for legacy compat
-_MONGO_URL = "os.getenv("MONGO_URL","mongodb+srv://...")"
+_MONGO_URL = os.getenv("MONGO_URL","mongodb+srv://...")
 _MONGO_DB_NAME = "blastbot"
 _MONGO_COLLECTION = "data"
 
@@ -123,7 +123,7 @@ SUPER_ADMIN_NAME = "@Rohit_mxd"
 SUPER_ADMIN_LINK = "https://t.me/Rohit_mxd"
 SUPER_ADMINS = [2109945627]
 
-BOT_TOKEN = os.getenv("BOT_TOKEN","8999186466:...")
+BOT_TOKEN = os.getenv("BOT_TOKEN", "your_bot_token")
 LOG_CHANNEL_ID = -1003357838238
 
 _DATA_FILE = "blast_data.json"  # fallback only if mongo fails
