@@ -4,7 +4,13 @@ from datetime import datetime
 from copy import deepcopy
 from collections import defaultdict
 
+# --- YEH NAYA IMPORT ADD KAREIN ---
+from motor.motor_asyncio import AsyncIOMotorClient
+
 import aiohttp
+from aiogram import Bot, Dispatcher, F, Router
+# (baki aage ke imports waise hi rahenge)
+
 from aiogram import Bot, Dispatcher, F, Router
 from aiogram.types import (
     Message, CallbackQuery,
@@ -29,6 +35,21 @@ logging.basicConfig(
     datefmt="%H:%M:%S"
 )
 log = logging.getLogger("BlastBot")
+
+# ==========================================
+# MONGODB DATABASE CONFIGURATION (RENDER SAFE)
+# ==========================================
+MONGO_URI = os.getenv("MONGO_URI")
+db_client = AsyncIOMotorClient(MONGO_URI)
+db = db_client["cbomber_db"]  # Database ka naam
+users_collection = db["users"]  # Users collection
+
+# ==========================================
+# PREMIUM EMOJI IDs ==========================
+# ==========================================
+EMOJI_FIRE = "5289722755871162900"  # 🔥
+# (baki emojis waise hi rahenge)
+
 
 # ========== PREMIUM EMOJI IDs ==========
 EMOJI_FIRE = "5289722755871162900"      # 🔥
@@ -1471,12 +1492,16 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
 
         session = UserSession(uid)
         session.number = number
-        session.blast_data = load()  # Load once at start of blast
-        USER_SESSIONS[uid] = session
+        
+        # Data ko ek hi baar load kiya aur variable mein save kar liya
+        db_data = load()
+        session.blast_data = db_data 
+        USER_ESSIONS[uid] = session
 
-    is_regular_user = not is_admin(uid, load()) and not is_owner(uid, load())
-    current_credits = get_user_credits(uid, load()) if is_regular_user else None
-
+    # Ab yahan bar-bar load() nahi hoga, balki upar wale 'db_data' ka use hoga
+    is_regular_user = not is_admin(uid, db_data) and not is_owner(uid, db_data)
+    current_credits = get_user_credits(uid, db_data) if is_regular_user else None
+    
     speed_label_display = "🚀 FAST" if speed == SPEED_FAST else "⚡ MEDIUM" if speed == SPEED_MEDIUM else "🐢 SLOW"
 
     try:
@@ -1558,7 +1583,7 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
                             (sent_ok + sent_fail) == count or
                             session.cancelled):
 
-                            current_credits_live = get_user_credits(uid, load()) if is_regular_user else None
+                            current_credits_live = get_user_credits(uid, session.blast_data) if is_regular_user else None
                             try:
                                 await progress_msg.edit_text(
                                     progress_text(sent_ok, sent_fail, count, current_credits_live, speed_label_display),
