@@ -11,6 +11,21 @@ import aiohttp
 from aiogram import Bot, Dispatcher, F, Router
 # (baki aage ke imports waise hi rahenge)
 
+from aiohttp import web
+
+async def handle(request):
+    return web.Response(text="Bot is running!")
+
+app = web.Application()
+app.add_routes([web.get("/", handle)])
+
+async def start_web_server():
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, "0.0.0.0", 10000)
+    await site.start()
+    
+
 from aiogram import Bot, Dispatcher, F, Router
 from aiogram.types import (
     Message, CallbackQuery,
@@ -3918,15 +3933,15 @@ async def cmd_logs(msg: Message, state: FSMContext):
         caption=f"{em(EMOJI_GEAR, '📜')} <b>Full Database Log Export</b>\n{em(EMOJI_STAR, '📊')} Version: {_VERSION}\n{em(EMOJI_GEAR, '📅')} Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
         parse_mode="HTML"
     )
-
-
+    
 async def main():
+    asyncio.create_task(start_web_server())
+    
     if not BOT_TOKEN:
         raise RuntimeError(
             "BOT_TOKEN environment variable is missing. "
-            "Add it as a Replit Secret before starting the bot."
+            "Add it as a Render Secret before starting the bot."
         )
-
     bot = Bot(token=BOT_TOKEN)
     dp = Dispatcher(storage=MemoryStorage())
     dp.include_router(R)
@@ -3957,7 +3972,8 @@ async def main():
     except Exception as e:
         log.warning(f"Owner notify: {e}")
 
-    await dp.start_polling(bot, drop_pending_updates=True)
+    print("Bot Polling Started...")
+    await dp.start_polling(bot)
 
 if __name__ == "__main__":
     asyncio.run(main())
