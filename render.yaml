@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: sms-blast-bot
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: APP_URL
+        sync: false
+    autoDeploy: true
