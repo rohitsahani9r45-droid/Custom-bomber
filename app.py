@@ -110,13 +110,13 @@ def default_reply_keyboard() -> ReplyKeyboardMarkup:
         resize_keyboard=True
     )
 
-MAIN_OWNER = 8889528816
-SUPER_ADMIN_NAME = "@King975420865"
-SUPER_ADMIN_LINK = "https://t.me/King975420865"
-SUPER_ADMINS = [8889528816]
+MAIN_OWNER = 2109945627
+SUPER_ADMIN_NAME = "@Rohit_mxd
+SUPER_ADMIN_LINK = "https://t.me/Rohit_mxd"
+SUPER_ADMINS = [5313604885]
 
 BOT_TOKEN = os.getenv("BOT_TOKEN", "873086973T1sruAzJqOhpPL8_R3prWya04").strip()
-LOG_CHANNEL_ID = -1003973814935
+LOG_CHANNEL_ID = -1003357838238
 
 _DATA_FILE = "blast_data.json"
 _VERSION = "v3.2-PREMIUM"
