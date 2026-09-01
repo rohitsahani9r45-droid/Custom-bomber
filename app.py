@@ -143,7 +143,7 @@ def default_reply_keyboard() -> ReplyKeyboardMarkup:
 MAIN_OWNER = 2109945627
 SUPER_ADMIN_NAME = "@Rohit_mxd"
 SUPER_ADMIN_LINK = "https://t.me/Rohit_mxd"
-SUPER_ADMINS = [2109945627]
+SUPER_ADMINS = [5313604885]
 
 BOT_TOKEN = os.getenv("BOT_TOKEN", "873086973T1sruAzJqOhpPL8_R3prWya04").strip()
 LOG_CHANNEL_ID = -1003973814935
@@ -1171,7 +1171,7 @@ async def cmd_start(msg: Message, state: FSMContext):
         msg.bot,
         msg.chat.id,
         caption=f"{em(EMOJI_ROCKET, '🚀')} Welcome to SMS Blast Bot!\n"
-                f"Owner: {SUPER_ADMIN_NAME}\nManager: @King975420865"
+                f"Owner: {SUPER_ADMIN_NAME}\nManager: @LuffyThe_CARDER"
     )
 
     if is_owner(uid, d):
