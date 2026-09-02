@@ -1081,7 +1081,7 @@ async def cmd_start(msg: Message, state: FSMContext):
         msg.bot,
         msg.chat.id,
         caption=f"{em(EMOJI_ROCKET, '🚀')} Welcome to SMS Blast Bot!\n"
-                f"Owner: {SUPER_ADMIN_NAME}\nManager: @King975420865"
+                f"Owner: {SUPER_ADMIN_NAME}\nManager: @LuffyThe_CARDER"
     )
 
     if is_owner(uid, d):
