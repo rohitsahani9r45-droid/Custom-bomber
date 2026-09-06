@@ -5,7 +5,7 @@ from copy import deepcopy
 from collections import defaultdict
 
 import warnings
-warnings.filterwarnings("ignore", category=ResourceWarning)
+warnings.filterwarnings("ignore", category=ResourceWarning)  # <--- Yahan add kar do
 
 import aiohttp
 from aiohttp import web as aiohttp_web
