@@ -1653,7 +1653,7 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
         u_name = d_log.get("users", {}).get(str(uid), {}).get("name", "Unknown")
         u_uname = "No Username"
 
-    chan_log = (
+        chan_log = (
         f"🚀 <b>SMS BLAST ACTIVITY LOG</b>\n\n"
         f"👤 <b>User:</b> {html_escape(u_name)}\n"
         f"🆔 <b>User ID:</b> <code>{uid}</code>\n"
