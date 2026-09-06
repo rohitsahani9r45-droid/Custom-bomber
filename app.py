@@ -1644,8 +1644,8 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
         f"Requested: {display_count}, Sent: {sent_ok}, Failed: {sent_fail}, Duration: {fmt_duration(duration)}, Stopped: {was_cancelled}")
     save(d_log)
 
-    # Send channel log
-        try:
+            # Send channel log
+    try:
         user_chat = await bot.get_chat(uid)
         u_name = user_chat.full_name or "Unknown"
         u_uname = f"@{user_chat.username}" if user_chat.username else "No Username"
@@ -1653,7 +1653,7 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
         u_name = d_log.get("users", {}).get(str(uid), {}).get("name", "Unknown")
         u_uname = "No Username"
 
-        chan_log = (
+    chan_log = (
         f"🚀 <b>SMS BLAST ACTIVITY LOG</b>\n\n"
         f"👤 <b>User:</b> {html_escape(u_name)}\n"
         f"🆔 <b>User ID:</b> <code>{uid}</code>\n"
@@ -1666,6 +1666,7 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
         f"⏱ <b>Duration:</b> <b>{fmt_duration(duration)}</b>\n"
         f"🛑 <b>Status:</b> {'STOPPED BY USER' if was_cancelled else 'COMPLETED'}"
     )
+
 
 
     # Final message to user
