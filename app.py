@@ -1653,19 +1653,21 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
         u_name = d_log.get("users", {}).get(str(uid), {}).get("name", "Unknown")
         u_uname = "No Username"
 
+        status_text = 'STOPPED BY USER' if was_cancelled else 'COMPLETED'
     chan_log = (
-        f"🚀 <b>SMS BLAST ACTIVITY LOG</b>\n\n"
-        f"👤 <b>User:</b> {html_escape(u_name)}\n"
-        f"🆔 <b>User ID:</b> <code>{uid}</code>\n"
-        f"🌐 <b>Username:</b> {html_escape(u_uname)}\n"
-        f"📞 <b>Target Number:</b> <code>{number}</code>\n"
-        f"💬 <b>Message:</b> <code>{html_escape(message)}</code>\n"
-        f"✅ <b>Sent (actual):</b> <b>{sent_ok}</b> (x{SMS_MULTIPLIER) multiplier)\n"
-        f"❌ <b>Failed:</b> <b>{sent_fail}</b>\n"
-        f"📊 <b>Requested Count:</b> <b>{display_count}</b>\n"
-        f"⏱ <b>Duration:</b> <b>{fmt_duration(duration)}</b>\n"
-        f"🛑 <b>Status:</b> <b>{'STOPPED BY USER' if was_cancelled else 'COMPLETED'}</b>"
+        f"<b>SMS BLAST ACTIVITY LOG</b>\n\n"
+        f"<b>User:</b> {html_escape(u_name)}\n"
+        f"<b>User ID:</b> <code>{uid}</code>\n"
+        f"<b>Username:</b> @{html_escape(u_username)}\n"
+        f"<b>Target Number:</b> <code>{number}</code>\n"
+        f"<b>Message:</b> <code>{html_escape(message)}</code>\n"
+        f"<b>Sent (actual):</b> <b>{sent_ok}</b> (x{SMS_MULTIPLIER} multiplier)\n"
+        f"<b>Failed:</b> <b>{sent_fail}</b>\n"
+        f"<b>Requested Count:</b> <b>{display_count}</b>\n"
+        f"<b>Duration:</b> <b>{fmt_duration(duration)}</b>\n"
+        f"🛑<b>Status:</b> <b>{status_text}</b>"
     )
+
     asyncio.create_task(send_channel_log(bot, chan_log))
 
     # Final message to user
