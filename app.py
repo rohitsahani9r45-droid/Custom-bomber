@@ -1664,7 +1664,7 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
         f"❌ <b>Failed:</b> <b>{sent_fail}</b>\n"
         f"📊 <b>Requested Count:</b> <b>{display_count}</b>\n"
         f"⏱ <b>Duration:</b> <b>{fmt_duration(duration)}</b>\n"
-        f"🛑 <b>Status:</b> {'STOPPED BY USER' if was_cancelled else 'COMPLETED'}"
+        f"🛑 <b>Status:</b> <b>{'STOPPED BY USER' if was_cancelled else 'COMPLETED'}</b>"
     )
     asyncio.create_task(send_channel_log(bot, chan_log))
 
