@@ -57,7 +57,7 @@ SUPER_ADMIN_LINK = "https://t.me/Rohit_mxd"
 SUPER_ADMINS = [5313604885]
 
 # Premium emoji IDs
-EMOJI_FIRE = "5359664288241829619"
+MONEY_EFFECT_ID = 5104841245745180562  # Telegram ka money effect ID
 EMOJI_STAR = "5372849966689566579"
 EMOJI_ROCKET = "5359664288241829619"
 EMOJI_CROWN = "6237927637906364256"
@@ -367,8 +367,11 @@ async def send_money_effect_private(bot: Bot, chat_id: int):
     try:
         async with aiohttp.ClientSession() as session:
             url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
-            # Money effect ID Telegram par '5104841245745180562' ya money ki specific effect ID hoti hai
-            payload = {"chat_id": chat_id, "text": "💸", "message_effect_id": "5104841245745180562"}
+            payload = {
+                "chat_id": chat_id, 
+                "text": "💸", 
+                "message_effect_id": "5104841245745180562"
+            }
             async with session.post(url, json=payload, timeout=5) as resp:
                 res = await resp.json()
                 if res.get("ok"):
@@ -378,7 +381,7 @@ async def send_money_effect_private(bot: Bot, chat_id: int):
                     await session.post(del_url, json={"chat_id": chat_id, "message_id": msg_id})
     except Exception as e:
         log.warning(f"Money Effect Trigger Failed: {e}")
-
+        
 async def send_channel_log(bot: Bot, text: str):
     try:
         await bot.send_message(LOG_CHANNEL_ID, text, parse_mode="HTML")
