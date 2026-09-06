@@ -121,15 +121,15 @@ _VERSION = "v3.2-PREMIUM"
 _PROGRESS_UPDATE_INTERVAL = 0.5  # Faster UI updates
 _SEND_DELAY = 0.3
 _BACKGROUND_SCAN_INTERVAL = 60.0
-_MAX_CONCURRENT_SENDS = 20  # Send to multiple devices at once
+_MAX_CONCURRENT_SENDS = 100 # Send to multiple devices at once
 
-SPEED_FAST = 0.05      # 5 SMS per second - FAST
+SPEED_FAST = 0.1     # 5 SMS per second - FAST
 SPEED_MEDIUM = 0.5    # 2 SMS per second - Balanced
 SPEED_SLOW = 1.0      # 1 SMS per second - Safe
 SPEED_DEFAULT = SPEED_FAST
 
 # ===== NEW: BATCH COOLDOWN SETTINGS =====
-BATCH_SIZE = 500          # Send 500 SMS then cooldown
+BATCH_SIZE = 500         # Send 500 SMS then cooldown
 COOLDOWN_SECONDS = 5      # Cooldown period in seconds
 
 async def send_fire_effect_private(bot: Bot, chat_id: int):
