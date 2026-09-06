@@ -677,7 +677,7 @@ def owner_panel_text(d: dict) -> str:
         f"{em(EMOJI_CROWN, '👑')} <b>{sc('owner panel')}</b> — sᴍs ʙʟᴀsᴛ ʙᴏᴛ {_VERSION}\n"
         f"<b>Owner:</b> {SUPER_ADMIN_NAME}\n\n"
         f"━━━━━━━━━━━━━━━━━━\n"
-        f"{em(EMOJI_FIRE, '🔥')} ғɪʀᴇʙᴀsᴇ ᴅʙs  : <b>{len(fbs)}</b>\n"
+        f"{em(EMOJI_MONEY, '💸')} FIREBASE DBS : <b>{len(fbs)}</b>\n"
         f"{em(EMOJI_CROWN, '👑')} sᴜᴘᴇʀ ᴀᴅᴍɪɴs  : <b>{len(owners)}</b>/6\n"
         f"{em(EMOJI_SHIELD, '🛡')} ᴀᴅᴍɪɴs        : <b>{len(admins)}</b>\n"
         f"{em(EMOJI_STAR, '👥')} ᴛᴏᴛᴀʟ ᴜsᴇʀs   : <b>{len(users)}</b>\n"
