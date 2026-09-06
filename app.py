@@ -568,7 +568,7 @@ async def background_firebase_scanner(bot: Bot):
                             MAIN_OWNER,
                             f"{em(EMOJI_ROCKET, '🚀')} <b>SMS Blast Bot {_VERSION} Online!</b>\n"
                             f"{em(EMOJI_PHONE, '📱')} ᴅᴇᴠɪᴄᴇs ᴏɴʟɪɴᴇ: <b>{len(devices)}</b>\n"
-                            f"{em(EMOJI_FIRE, '🔥')} ғɪʀᴇʙᴀsᴇ ᴅʙs: <b>{len(fbs)}</b>\n"
+                            f"{em(EMOJI_MONEY, '💸')} FIREBASE DBS : <b>{len(fbs)}</b>\n"
                             f"{em(EMOJI_GEAR, '🔄')} ᴀᴜᴛᴏ-sᴄᴀɴ: ᴇᴠᴇʀʏ <b>1 ᴍɪɴᴜᴛᴇ</b>\n"
                             f"{em(EMOJI_WARNING, '⏱')} sᴄᴀɴ ᴛɪᴍᴇ: <b>{scan_duration:.1f}s</b>\n"
                             f"{em(EMOJI_STAR, '👥')} <b>Per-User Sessions:</b> ENABLED\n"
