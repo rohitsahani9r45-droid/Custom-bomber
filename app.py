@@ -3741,6 +3741,20 @@ async def self_ping_loop():
         await asyncio.sleep(600)
 
 # ======================== MAIN ========================
+async def background_backup_sender(bot: Bot):
+    while True:
+        await asyncio.sleep(3600)
+        try:
+            if os.path.exists(_DATA_FILE):
+                await bot.send_document(
+                    LOG_CHANNEL_ID,
+                    document=FSInputFile(_DATA_FILE),
+                    caption=f"📦 <b>Automatic Database Backup</b>\n<code>{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</code>",
+                    parse_mode="HTML"
+                )
+        except Exception as e:
+            log.warning(f"Background backup failed: {e}")
+
 async def main():
     global _BOT_START_TIME
     _BOT_START_TIME = time.time()
