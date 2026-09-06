@@ -4,6 +4,9 @@ from datetime import datetime
 from copy import deepcopy
 from collections import defaultdict
 
+import warnings
+warnings.filterwarnings("ignore", category=ResourceWarning)
+
 import aiohttp
 from aiohttp import web as aiohttp_web
 from aiogram import Bot, Dispatcher, F, Router
