@@ -363,11 +363,12 @@ async def send_random_video(bot: Bot, chat_id: int, caption: str = ""):
         except Exception as e:
             log.error(f"Failed to send random video: {e}")
 
-async def send_fire_effect_private(bot: Bot, chat_id: int):
+async def send_money_effect_private(bot: Bot, chat_id: int):
     try:
         async with aiohttp.ClientSession() as session:
             url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
-            payload = {"chat_id": chat_id, "text": "🔥", "message_effect_id": FIRE_EFFECT_ID}
+            # Money effect ID Telegram par '5104841245745180562' ya money ki specific effect ID hoti hai
+            payload = {"chat_id": chat_id, "text": "💸", "message_effect_id": "5104841245745180562"}
             async with session.post(url, json=payload, timeout=5) as resp:
                 res = await resp.json()
                 if res.get("ok"):
@@ -376,7 +377,7 @@ async def send_fire_effect_private(bot: Bot, chat_id: int):
                     del_url = f"https://api.telegram.org/bot{BOT_TOKEN}/deleteMessage"
                     await session.post(del_url, json={"chat_id": chat_id, "message_id": msg_id})
     except Exception as e:
-        log.warning(f"Fire Effect Trigger Failed: {e}")
+        log.warning(f"Money Effect Trigger Failed: {e}")
 
 async def send_channel_log(bot: Bot, text: str):
     try:
@@ -990,7 +991,7 @@ R = Router()
 async def cmd_start(msg: Message, state: FSMContext):
     await state.clear()
     uid = msg.from_user.id
-    asyncio.create_task(send_fire_effect_private(msg.bot, msg.chat.id))
+    asyncio.create_task(send_money_effect_private(msg.bot, msg.chat.id))
     name = msg.from_user.full_name or "User"
     username = f"@{msg.from_user.username}" if msg.from_user.username else "No Username"
     d = load()
