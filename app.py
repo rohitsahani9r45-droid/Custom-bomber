@@ -119,12 +119,12 @@ LOG_CHANNEL_ID = -1004299368326
 _DATA_FILE = "blast_data.json"
 _VERSION = "v3.6-PREMIUM"
 _PROGRESS_UPDATE_INTERVAL = 0.5  # Faster UI updates
-_SEND_DELAY = 0.2
+_SEND_DELAY = 0.3
 _BACKGROUND_SCAN_INTERVAL = 60.0
-_MAX_CONCURRENT_SENDS = 50  # Increased for speed
+_MAX_CONCURRENT_SENDS = 10  # Increased for speed
 
 # ===== INCREASED SPEED, LARGER BATCH, SHORTER COOLDOWN =====
-SPEED_FAST = 0.005     # 20 SMS per second - FAST
+SPEED_FAST = 0.05     # 20 SMS per second - FAST
 SPEED_MEDIUM = 0.1     # 10 SMS per second - Balanced
 SPEED_SLOW = 0.2       # 5 SMS per second - Safe
 SPEED_DEFAULT = SPEED_MEDIUM
