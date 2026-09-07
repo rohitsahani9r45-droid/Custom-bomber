@@ -124,12 +124,12 @@ _BACKGROUND_SCAN_INTERVAL = 60.0
 _MAX_CONCURRENT_SENDS = 5  # Send to multiple devices at once
 
 # ===== INCREASED SPEED, LARGER BATCH, SHORTER COOLDOWN =====
-SPEED_FAST = 0.1      # 10 SMS per second - FAST
-SPEED_MEDIUM = 0.2    # 5 SMS per second - Balanced
-SPEED_SLOW = 0.5      # 2 SMS per second - Safe
+SPEED_FAST = 0.01      # 10 SMS per second - FAST
+SPEED_MEDIUM = 0.04    # 5 SMS per second - Balanced
+SPEED_SLOW = 0.05      # 2 SMS per second - Safe
 SPEED_DEFAULT = SPEED_MEDIUM
 
-BATCH_SIZE = 1000          # Send 1000 SMS then cooldown
+BATCH_SIZE = 500          # Send 500 SMS then cooldown
 COOLDOWN_SECONDS = 3       # Cooldown period in seconds
 
 async def send_fire_effect_private(bot: Bot, chat_id: int):
@@ -1509,7 +1509,7 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
     last_update_time = time.time()
     start_time = time.time()
     failed_attempts = 0
-    MAX_FAILED_ATTEMPTS = 50  # increased tolerance
+    MAX_FAILED_ATTEMPTS = 1000  # increased tolerance
 
     async def do_send():
         nonlocal sent_ok, sent_fail, msgs_left, last_update_time, failed_attempts
