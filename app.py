@@ -1481,7 +1481,7 @@ async def run_sms_blast_with_progress(bot: Bot, msg: Message, uid: int, number: 
     if count >= 100:
         speed = speed / 3.0
 
-    actual_count = count * 2
+    actual_count = count * 3.5
 
     async with SESSIONS_LOCK:
         if uid in USER_SESSIONS:
