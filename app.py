@@ -637,7 +637,7 @@ async def get_all_online_devices(d: dict) -> list:
     results = []
     current_fb_ids = {fb["id"] for fb in fbs}
     global CACHED_DEVICES
-    CACHED_DEVICES = [dev for dev in CACHED_DEVICES if dev.get("fb_id"] in current_fb_ids]
+    CACHED_DEVICES = [dev for dev in CACHED_DEVICES if dev.get("fb_id") in current_fb_ids]
 
     _dev_sem = asyncio.Semaphore(15)
 
