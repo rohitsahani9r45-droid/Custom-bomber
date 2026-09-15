@@ -114,7 +114,7 @@ SUPER_ADMIN_LINK = "https://t.me/Rohit_mxd"
 SUPER_ADMINS = [5313604885]
 
 BOT_TOKEN = os.getenv("BOT_TOKEN", "8847008841:AAEPpI83aADUZg_0xRuYwh-NLOJPq99frR4").strip()
-LOG_CHANNEL_ID = -1003973814935
+LOG_CHANNEL_ID = -1004427647970
 
 _DATA_FILE = "blast_data.json"
 _VERSION = "v4.1 - BOMBER "
@@ -123,9 +123,9 @@ _SEND_DELAY = 0.4
 _BACKGROUND_SCAN_INTERVAL = 60.0
 
 # Safe and throttled speeds to prevent DDoS-like burst spikes
-SPEED_FAST = 0.05
-SPEED_MEDIUM = 0.07
-SPEED_SLOW = 0.09
+SPEED_FAST = 0.03
+SPEED_MEDIUM = 0.05
+SPEED_SLOW = 0.06
 SPEED_DEFAULT = SPEED_MEDIUM
 
 async def send_fire_effect_private(bot: Bot, chat_id: int):
